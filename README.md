@@ -12,8 +12,7 @@ Clone the repository along with its submodules:
 
 ```git clone --depth 1 --recurse-submodules https://github.com/thoughtsunificator/mal-ripper.git```
 
-### Usage
+### 
 
-- Update the MariaDB database settings in ``.env.json``
-- npm install
-- npm start
+- ``npm install``
+- ``npm start``
