@@ -1,8 +1,8 @@
 # mal-scraper-client
 
-A scraper for myanimelist.net. 
+Scraper for myanimelist.net. 
 
-Built on top of [mal-scrapper](https://github.com/Kylart/MalScraper) and [anime-offline-database](https://github.com/manami-project/anime-offline-database)
+Built on top of [mal-scraper](https://github.com/Kylart/MalScraper) and [anime-offline-database](https://github.com/manami-project/anime-offline-database)
 
 ## Getting started
 
