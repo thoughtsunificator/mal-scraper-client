@@ -1,0 +1,21 @@
+{
+	"name": "mal-scraper-client",
+	"version": "1.0.0",
+	"description": "Client for mal-scraper",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/thoughtsunificator/mal-scraper-client.git"
+	},
+	"bugs": {
+		"url": "https://github.com/thoughtsunificator/mal-scraper-client/issues"
+	},
+	"author": "Romain Lebesle <oss@thoughtsunificator.me> (https://thoughtsunificator.me)",
+	"license": "MIT",
+	"dependencies": {
+		"camelcase": "^5.3.1",
+		"image-downloader": "^3.4.2",
+		"mal-scraper": "^2.6.2",
+		"mariadb": "^2.0.5",
+		"sequelize": "^5.8.12"
+	}
+}
