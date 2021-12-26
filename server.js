@@ -7,7 +7,8 @@ const models = require("./model/index.js")
 const animes = animeOfflineDatabase.data.filter(anime => anime.sources.filter(source => source.startsWith("https://myanimelist.net").length >= 1).sort(() => Math.random() - 0.5));
 
 (async function() {
-	for(const anime of animes) {
+	const count = await models.Anime.count()
+	for(const anime of animes.slice(count)) {
 		let sources = anime.sources.filter(source => source.startsWith("https://myanimelist.net"))
 		if(sources.length === 0) {
 			continue;
