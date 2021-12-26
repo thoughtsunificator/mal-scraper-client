@@ -18,16 +18,14 @@ const animes = animeOfflineDatabase.data.filter(anime => anime.sources.filter(so
 		let end_date = null
 		if(info.aired.includes("to") === true) {
 			if (isNaN(Date.parse(info.aired.split("to")[0])) === false) {
-				start_date = info.aired.split("to")[0]
+				start_date = new Date(info.aired.split("to")[0])
 			}
 			if (isNaN(Date.parse(info.aired.split("to")[1])) === false) {
-				end_date = info.aired.split("to")[1]
+				end_date = new Date(info.aired.split("to")[1])
 			}
 		} else if (isNaN(Date.parse(info.aired)) === false) {
 			start_date = info.aired
 		}
-		console.log("start_date", start_date)
-		console.log("end_date", end_date)
 		const animeModel = await models.Anime.create({
 			type: info.type,
 			title: info.title,
