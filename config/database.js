@@ -3,9 +3,9 @@ import fs from 'fs'
 import Sequelize from "sequelize"
 
 let config = {
-	"DATABASE_NAME": "mal_scrapper",
-	"DATABASE_USER": "mal-scrapper",
-	"DATABASE_PASSWORD": "mal-scrapper",
+	"DATABASE_NAME": "mal_scraper",
+	"DATABASE_USER": "mal-scraper",
+	"DATABASE_PASSWORD": "mal-scraper",
 	"DATABASE_HOST": "localhost"
 }
 
