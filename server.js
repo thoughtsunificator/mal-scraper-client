@@ -1,6 +1,5 @@
 const path = require('path')
 const malScraper = require('mal-scraper')
-const imageDownloader = require('image-downloader')
 
 const animeOfflineDatabase = require("./lib/anime-offline-database/anime-offline-database.json")
 const models = require("./model/index.js")
@@ -10,15 +9,11 @@ const animes = animeOfflineDatabase.data.filter(anime => anime.sources.filter(so
 (async function() {
 	for(const anime of animes) {
 		let sources = anime.sources.filter(source => source.startsWith("https://myanimelist.net"))
+		if(sources.length === 0) {
+			continue;
+		}
 		console.log("requesting", sources[0])
 		const info = await malScraper.getInfoFromURL(sources[0])
-		let image
-		if(info.picture !== "" && typeof info.picture === "string") {
-			image = await imageDownloader.image({
-				url: info.picture,
-				dest: "./downloads"
-			})
-		}
 		let start_date = null
 		let end_date = null
 		if(info.aired.includes("to") === true) {
@@ -45,10 +40,10 @@ const animes = animeOfflineDatabase.data.filter(anime => anime.sources.filter(so
 			source: info.source,
 			premiered: info.premiered,
 			duration: info.duration,
-			cover: image ? path.basename(image.filename) : ""
+			cover: info.picture
 		})
 		for(const genre of info.genres) {
-			if(genre === "No genres have been added yet.") {
+			if(genre === "No genres have been added yet." || genre.trim() === "") {
 				continue;
 			}
 			await models.AnimeMeta.create({
@@ -58,7 +53,7 @@ const animes = animeOfflineDatabase.data.filter(anime => anime.sources.filter(so
 			})
 		}
 		for(const producer of info.producers) {
-			if(producer === "None found, add some") {
+			if(producer === "None found, add some" || producer.trim() === "") {
 				continue;
 			}
 			await models.AnimeMeta.create({
@@ -68,7 +63,7 @@ const animes = animeOfflineDatabase.data.filter(anime => anime.sources.filter(so
 			})
 		}
 		for(const studio of info.studios) {
-			if(studio === "None found, add some") {
+			if(studio === "None found, add some" || studio.trim() === "") {
 				continue;
 			}
 			await models.AnimeMeta.create({
@@ -77,7 +72,10 @@ const animes = animeOfflineDatabase.data.filter(anime => anime.sources.filter(so
 				id_anime: animeModel.id_anime,
 			})
 		}
-		for(const synonym of info.synonyms.split(",")) {
+		for(const synonym of info.synonyms) {
+			if(synonym.trim() === "") {
+				continue;
+			}
 			await models.AnimeMeta.create({
 				name: "synonym",
 				value: synonym,
