@@ -1,7 +1,7 @@
 const path = require('path')
 const malScraper = require('mal-scraper')
 
-const animeOfflineDatabase = require("./lib/anime-offline-database/anime-offline-database.json")
+const animeOfflineDatabase = require("./lib/anime-offline-database-minified.json")
 const models = require("./model/index.js")
 
 const animes = animeOfflineDatabase.data.filter(anime => anime.sources.filter(source => source.startsWith("https://myanimelist.net").length >= 1).sort(() => Math.random() - 0.5));
