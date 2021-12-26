@@ -1,6 +1,7 @@
 {
 	"name": "mal-scraper-client",
 	"version": "1.0.0",
+	"type": "module",
 	"description": "Client for mal-scraper",
 	"repository": {
 		"type": "git",

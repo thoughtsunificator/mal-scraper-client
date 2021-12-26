@@ -1,6 +1,6 @@
-const path = require('path')
-const fs = require('fs')
-const Sequelize = require("sequelize")
+import path from 'path'
+import fs from 'fs'
+import Sequelize from "sequelize"
 
 let config = {
 	"DATABASE_NAME": "mal_scrapper",
@@ -10,17 +10,17 @@ let config = {
 }
 
 const keys = Object.keys(config)
-if(fs.existsSync(path.resolve(__dirname, "..", ".env.json"))) {
+if(fs.existsSync(".env.json")) {
 	config = {
 		...config,
-		...require(path.resolve(__dirname, "..", ".env.json"))
+		...JSON.parse(fs.readFileSync(".env.json"))
 	}
 }
 Object.keys(process.env).filter(key => keys.includes(key)).forEach(key => {
 	config[key] = process.env[key]
 })
 
-module.exports = new Sequelize(config.DATABASE_NAME, config.DATABASE_USER, config.DATABASE_PASSWORD, {
+export default new Sequelize(config.DATABASE_NAME, config.DATABASE_USER, config.DATABASE_PASSWORD, {
 	host: config.DATABASE_HOST,
 	dialect: "mariadb",
 	define: {

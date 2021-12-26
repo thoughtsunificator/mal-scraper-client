@@ -1,14 +1,14 @@
-const path = require('path')
-const malScraper = require('mal-scraper')
+import fs from "fs"
+import path from "path"
+import malScraper from "mal-scraper"
+import models from "./model/index.js"
 
-const animeOfflineDatabase = require("./lib/anime-offline-database-minified.json")
-const models = require("./model/index.js")
-
+const count = await models.Anime.count()
+const animeOfflineDatabase = JSON.parse(fs.readFileSync("./lib/anime-offline-database-minified.json"))
 const animes = animeOfflineDatabase.data.filter(anime => anime.sources.filter(source => source.startsWith("https://myanimelist.net").length >= 1).sort(() => Math.random() - 0.5));
 
-(async function() {
-	const count = await models.Anime.count()
-	for(const anime of animes.slice(count)) {
+for(const anime of animes.slice(count)) {
+	try {
 		let sources = anime.sources.filter(source => source.startsWith("https://myanimelist.net"))
 		if(sources.length === 0) {
 			continue;
@@ -81,5 +81,9 @@ const animes = animeOfflineDatabase.data.filter(anime => anime.sources.filter(so
 				id_anime: animeModel.id_anime,
 			})
 		}
+		console.log("Waiting 500ms before next request...")
+		await new Promise(resolve => setTimeout(resolve, 500))
+	} catch(ex) {
+		console.error(ex)
 	}
-})()
+}
