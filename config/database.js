@@ -9,16 +9,16 @@ let config = {
 	"DATABASE_HOST": "localhost"
 }
 
+const keys = Object.keys(config)
 if(fs.existsSync(path.resolve(__dirname, "..", ".env.json"))) {
-	let keys = Object.keys(config)
 	config = {
 		...config,
 		...require(path.resolve(__dirname, "..", ".env.json"))
 	}
-	Object.keys(process.env).filter(key => keys.includes(key)).forEach(key => {
-		config[key] = process.env[key]
-	})
 }
+Object.keys(process.env).filter(key => keys.includes(key)).forEach(key => {
+	config[key] = process.env[key]
+})
 
 module.exports = new Sequelize(config.DATABASE_NAME, config.DATABASE_USER, config.DATABASE_PASSWORD, {
 	host: config.DATABASE_HOST,
